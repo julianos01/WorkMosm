@@ -1,0 +1,6 @@
+@WorkMosM_HostAddress = http://localhost:5195
+
+GET {{WorkMosM_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
