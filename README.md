@@ -1,4 +1,4 @@
-# WorkMosM - User Management API
+# WorkMosM - User and loans Management API
 
 A professional-grade User and loans Management System built with **.NET 8** following **Hexagonal Architecture** (Ports & Adapters) and **Domain-Driven Design (DDD)** principles.
 
