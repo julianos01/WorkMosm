@@ -38,7 +38,7 @@ namespace Infrastructure.Security
                 expires: expirationTime,
                 signingCredentials: credentials
             );
-            LoginUserResult tokenResponse = new(new JwtSecurityTokenHandler().WriteToken(token), expirationTime,user.Id.ToString());
+            LoginUserResult tokenResponse = new(new JwtSecurityTokenHandler().WriteToken(token), expirationTime, user.Id.ToString());
 
             return tokenResponse;
         }

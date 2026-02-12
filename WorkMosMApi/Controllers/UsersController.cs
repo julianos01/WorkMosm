@@ -1,16 +1,22 @@
 ﻿using Application.UseCases.DeactivateUser;
 using Application.UseCases.GetUserProfile;
+using Application.UseCases.LoginUser.Records;
 using Application.UseCases.RegisterUser;
 using Application.UseCases.UpdateUser;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkMosmApi.Models;
+using WorkMosmApi.Models.Errors;
 
 namespace WorkMosMApi.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
+    [ProducesResponseType(typeof(LoginUserResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
     public class UsersController : ControllerBase
     {
         private readonly IRegisterUserUseCase _registerUser;
@@ -44,7 +50,9 @@ namespace WorkMosMApi.Controllers
         [HttpPut("updateuserprofile")]
         public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserRequest request)
         {
-            await _updateUserProfile.ExecuteAsync(request);
+            var currentUserId = User.GetUserId();
+
+            await _updateUserProfile.ExecuteAsync(request, currentUserId);
             return Ok();
         }
 

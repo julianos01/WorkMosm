@@ -13,7 +13,7 @@ namespace Application.DependencyInjection
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
-            services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();  
+            services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IUpdateUserProfile, UpdateUserProfileUseCase>();
             services.AddScoped<IDeactivateUserUseCase, DeactivateUserUseCase>();

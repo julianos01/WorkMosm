@@ -1,11 +1,7 @@
 ﻿using Application.Interfaces.Security;
 using Application.UseCases.LoginUser.Records;
+using Domain.CustomExceptions;
 using Domain.Ports;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.LoginUser
 {
@@ -27,15 +23,15 @@ namespace Application.UseCases.LoginUser
             var user = await _users.GetByEmailAsync(request.Email);
 
             if (user is null)
-                throw new UnauthorizedAccessException("Invalid email or password.");
+                throw new InvalidCredentialsException();
 
             if (!user.IsActive)
                 throw new UnauthorizedAccessException("Inactive User");
 
             var isValid = _passwordHasher.Verify(request.Password, user.PasswordHash);
 
-            if(!isValid)
-                throw new UnauthorizedAccessException("Invalid email or password.");
+            if (!isValid)
+                throw new InvalidCredentialsException();
 
             var tokenResponse = _tokenGenerator.GenerateToken(user);
 

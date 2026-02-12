@@ -1,14 +1,7 @@
-﻿using Application.UseCases.GetUserProfile;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.UseCases.UpdateUser
+﻿namespace Application.UseCases.UpdateUser
 {
     public interface IUpdateUserProfile
     {
-        Task ExecuteAsync(UpdateUserRequest request);
+        Task ExecuteAsync(UpdateUserRequest request, string? currentUserId);
     }
 }

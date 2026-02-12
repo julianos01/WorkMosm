@@ -4,7 +4,7 @@ using Domain.Ports;
 
 namespace Application.UseCases.RegisterUser
 {
-    public  class RegisterUserUseCase : IRegisterUserUseCase
+    public class RegisterUserUseCase : IRegisterUserUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;

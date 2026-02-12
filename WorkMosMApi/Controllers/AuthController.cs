@@ -1,6 +1,7 @@
 ﻿using Application.UseCases.LoginUser;
 using Application.UseCases.LoginUser.Records;
 using Microsoft.AspNetCore.Mvc;
+using WorkMosmApi.Models.Errors;
 
 namespace WorkMosmApi.Controllers
 {
@@ -16,10 +17,13 @@ namespace WorkMosmApi.Controllers
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(typeof(LoginUserResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
         {
             var result = await _loginUser.ExecuteAsync(request);
             return Ok(result);
-        }   
+        }
     }
 }

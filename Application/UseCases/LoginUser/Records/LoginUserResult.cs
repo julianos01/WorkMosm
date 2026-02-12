@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.UseCases.LoginUser.Records
+﻿namespace Application.UseCases.LoginUser.Records
 {
     public record LoginUserResult
     {
@@ -12,7 +6,7 @@ namespace Application.UseCases.LoginUser.Records
         public DateTime Expiration { get; init; }
         public string Id { get; init; }
 
-        public LoginUserResult(string token,DateTime expirationTime, string id)
+        public LoginUserResult(string token, DateTime expirationTime, string id)
         {
             Token = token;
             Expiration = expirationTime;
