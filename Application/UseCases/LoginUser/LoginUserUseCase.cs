@@ -37,9 +37,9 @@ namespace Application.UseCases.LoginUser
             if(!isValid)
                 throw new UnauthorizedAccessException("Invalid email or password.");
 
-            var token = _tokenGenerator.GenerateToken(user);
+            var tokenResponse = _tokenGenerator.GenerateToken(user);
 
-            return new LoginUserResult(token,user.Id);
+            return tokenResponse;
         }
     }
 }

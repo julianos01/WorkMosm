@@ -1,10 +1,11 @@
 ﻿using Application.Interfaces.Security;
+using Application.UseCases.LoginUser.Records;
 using Domain.Entities;
 using Infrastructure.Configurations;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Infrastructure.Security
 {
@@ -16,7 +17,7 @@ namespace Infrastructure.Security
         {
             _settings = options.Value;
         }
-        public string GenerateToken(User user)
+        public LoginUserResult GenerateToken(User user)
         {
             var claims = new List<Claim>
             {
@@ -26,6 +27,7 @@ namespace Infrastructure.Security
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_settings.SecretKey));
+            var expirationTime = DateTime.UtcNow.AddMinutes(_settings.ExpirationMinutes);
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -33,11 +35,12 @@ namespace Infrastructure.Security
                 issuer: _settings.Issuer,
                 audience: _settings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_settings.ExpirationMinutes),
+                expires: expirationTime,
                 signingCredentials: credentials
             );
+            LoginUserResult tokenResponse = new(new JwtSecurityTokenHandler().WriteToken(token), expirationTime,user.Id.ToString());
 
-            return  new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenResponse;
         }
     }
 }

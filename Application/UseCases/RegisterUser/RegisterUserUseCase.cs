@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.Security;
 using Domain.Entities;
 using Domain.Ports;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.RegisterUser
 {
@@ -20,7 +15,7 @@ namespace Application.UseCases.RegisterUser
             _passwordHasher = passwordHasher;
         }
 
-        public async Task RegisterUserAsync(string email, string passwordHash)
+        public async Task ExecuteAsync(string email, string passwordHash)
         {
 
             var existingUser = await _userRepository.GetByEmailAsync(email);

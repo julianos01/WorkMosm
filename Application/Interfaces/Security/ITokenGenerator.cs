@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.UseCases.LoginUser.Records;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Application.Interfaces.Security
 {
     public interface ITokenGenerator
     {
-        string GenerateToken(User user);
+        LoginUserResult GenerateToken(User user);
     }
 }

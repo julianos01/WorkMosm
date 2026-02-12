@@ -29,9 +29,10 @@ namespace Infrastructure.Persistence
             return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public Task<User?> GetByIdAsync(int id)
+        public Task<User?> GetByIdAsync(string id)
         {
-            return _context.Users.FindAsync(id).AsTask();
+            var guidId = Guid.Parse(id);
+            return _context.Users.FindAsync(guidId).AsTask();
         }
 
         public async Task UpdateAsync(User user)

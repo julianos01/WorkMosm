@@ -13,5 +13,13 @@
             Email = email;
             PasswordHash = passwordHash;
         }
+
+        public void UpdateProfile(string? newEmail, string? newPasswordHash)
+        {
+            if (!string.IsNullOrWhiteSpace(newEmail)) Email = newEmail;
+            if (!string.IsNullOrWhiteSpace(newPasswordHash)) PasswordHash = newPasswordHash;
+        }
+
+        public void Deactivate() => IsActive = false;
     }
 }

@@ -9,12 +9,13 @@ namespace Application.UseCases.LoginUser.Records
     public record LoginUserResult
     {
         public string Token { get; init; }
-        public string RefreshToken { get; init; }
         public DateTime Expiration { get; init; }
-        public Guid Id { get; init; }
-        public LoginUserResult(string token, Guid id)
+        public string Id { get; init; }
+
+        public LoginUserResult(string token,DateTime expirationTime, string id)
         {
             Token = token;
+            Expiration = expirationTime;
             Id = id;
         }
     }

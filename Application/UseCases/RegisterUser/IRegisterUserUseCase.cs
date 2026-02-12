@@ -8,6 +8,6 @@ namespace Application.UseCases.RegisterUser
 {
     public interface IRegisterUserUseCase
     {
-        Task RegisterUserAsync(string email, string passwordHash);
+        Task ExecuteAsync(string email, string passwordHash);
     }
 }
