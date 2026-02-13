@@ -4,7 +4,9 @@ using Application.UseCases.LoginUser;
 using Application.UseCases.RegisterUser;
 using Application.UseCases.UpdateUser;
 using Application.UseCases.UpdateUserProfile;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application.DependencyInjection
 {
@@ -17,6 +19,8 @@ namespace Application.DependencyInjection
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IUpdateUserProfile, UpdateUserProfileUseCase>();
             services.AddScoped<IDeactivateUserUseCase, DeactivateUserUseCase>();
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             return services;
         }
