@@ -6,7 +6,6 @@ using Application.UseCases.UpdateUser;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WorkMosmApi.Models;
 using WorkMosmApi.Models.Errors;
 
 namespace WorkMosMApi.Controllers
@@ -36,14 +35,14 @@ namespace WorkMosMApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
         {
-            await _registerUser.ExecuteAsync(request.Email, request.PasswordHash);
+            await _registerUser.ExecuteAsync(request);
             return Ok();
         }
 
         [HttpGet("getuserprofile")]
         public async Task<IActionResult> GetUserProfile(string email)
         {
-            var response = await _getUserProfile.GetUserProfileAsync(email);
+            var response = await _getUserProfile.ExecuteAsync(email);
             return Ok(response);
         }
 

@@ -2,6 +2,6 @@
 {
     public interface IRegisterUserUseCase
     {
-        Task ExecuteAsync(string email, string passwordHash);
+        Task ExecuteAsync(RegisterUserRequest registerUserRequest);
     }
 }

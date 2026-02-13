@@ -1,8 +1,7 @@
-using Application.UseCases.GetUserProfile;
 using Domain.CustomExceptions;
 using Domain.Ports;
 
-namespace Application.UseCases.UpdateUserProfile
+namespace Application.UseCases.GetUserProfile
 {
     public class GetUserProfileUseCase : IGetUserProfileUseCase
     {
@@ -13,10 +12,10 @@ namespace Application.UseCases.UpdateUserProfile
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task<GetUserResponse> GetUserProfileAsync(string email)
+        public async Task<GetUserResponse> ExecuteAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentException("El parámetro 'email' no puede ser nulo o vacío.", nameof(email));
+                throw new ArgumentException("Param 'email' can't be null or empty", nameof(email));
 
             var user = await _userRepository.GetByEmailAsync(email)
                        ?? throw new UserNotFoundException(email);

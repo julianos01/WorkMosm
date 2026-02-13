@@ -25,7 +25,7 @@ namespace WorkMosM.UnitTests.Application
         {
             // Arrange
             var request = new UpdateUserRequest("user-1", "test@test.com", null);
-            var currentUserIdFromToken = "user-999"; // Diferente al del request
+            var currentUserIdFromToken = "user-999";
 
             // Act & Assert
             await Assert.ThrowsAsync<UnauthorizedAccessException>(() =>
@@ -86,6 +86,5 @@ namespace WorkMosM.UnitTests.Application
             _repositoryMock.Verify(x => x.UpdateAsync(It.Is<User>(u =>
                 u.PasswordHash == "keep-this-hash")), Times.Once);
         }
-
     }
 }
