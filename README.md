@@ -1,4 +1,4 @@
-# WorkMosM - User and loans Management API
+# WorkMosm - User and CarSales Manager for demo
 
 A professional-grade User and loans Management System built with **.NET 8** following **Hexagonal Architecture** (Ports & Adapters) and **Domain-Driven Design (DDD)** principles.
 
