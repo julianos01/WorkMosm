@@ -1,23 +1,26 @@
-﻿using Application.Interfaces.Security;
-using Application.UseCases.UpdateUser;
-using Application.UseCases.UpdateUserProfile;
-using Domain.CustomExceptions;
-using Domain.Entities;
-using Domain.Ports;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
+using WorkMosm.Application.Interfaces.Security;
+using WorkMosm.Application.UseCases.UpdateUser;
+using WorkMosm.Application.Validators;
+using WorkMosm.Domain.CustomExceptions;
+using WorkMosm.Domain.Entities;
+using WorkMosm.Domain.Ports;
 
-namespace WorkMosM.UnitTests.Application
+namespace WorkMosm.UnitTests.Application
 {
     public class UpdateUserUseCaseTests
     {
         private readonly Mock<IUserRepository> _repositoryMock = new();
         private readonly Mock<IPasswordHasher> _passwordHasherMock = new();
         private readonly UpdateUserProfileUseCase _sut;
+        private readonly ILogger<UpdateUserProfileUseCase> _logger = new Logger<UpdateUserProfileUseCase>(new LoggerFactory());
+        private readonly UpdateUserValidator _validator = new();
 
         public UpdateUserUseCaseTests()
         {
             _repositoryMock = new Mock<IUserRepository>();
-            _sut = new UpdateUserProfileUseCase(_repositoryMock.Object, _passwordHasherMock.Object);
+            _sut = new UpdateUserProfileUseCase(_repositoryMock.Object, _passwordHasherMock.Object, _logger, _validator);
         }
 
         [Fact]

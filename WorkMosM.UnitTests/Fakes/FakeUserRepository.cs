@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Domain.Ports;
+﻿using WorkMosm.Domain.Entities;
+using WorkMosm.Domain.Ports;
 
-namespace WorkMosM.UnitTests.Fakes
+namespace WorkMosm.UnitTests.Fakes
 {
     public class FakeUserRepository : IUserRepository
     {

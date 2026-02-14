@@ -1,13 +1,14 @@
-﻿using Application.Interfaces.Security;
-using Application.UseCases.RegisterUser;
-using Application.Validators;
-using Domain.Entities;
-using Domain.Ports;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using Moq;
+using WorkMosm.Application.Interfaces.Security;
+using WorkMosm.Application.UseCases.RegisterUser;
+using WorkMosm.Application.Validators;
+using WorkMosm.Domain.Entities;
+using WorkMosm.Domain.Ports;
 
-namespace WorkMosM.UnitTests.Application
+namespace WorkMosm.UnitTests.Application
 {
     public class RegisterUserUseCaseTests
     {
@@ -15,17 +16,20 @@ namespace WorkMosM.UnitTests.Application
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly Mock<IPasswordHasher> _passwordHasherMock;
         private readonly RegisterUserUseCase _useCase;
+        private readonly ILogger<RegisterUserUseCase> _logger;
 
         public RegisterUserUseCaseTests()
         {
             _validator = new RegisterUserValidator();
             _userRepositoryMock = new Mock<IUserRepository>();
             _passwordHasherMock = new Mock<IPasswordHasher>();
+            _logger = new Logger<RegisterUserUseCase>(new LoggerFactory());
 
             _useCase = new RegisterUserUseCase(
                 _userRepositoryMock.Object,
                 _passwordHasherMock.Object,
-                _validator);
+                _validator,
+                _logger);
         }
 
         [Fact]

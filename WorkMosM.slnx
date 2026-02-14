@@ -1,7 +1,7 @@
 <Solution>
-  <Project Path="Application/Application.csproj" Id="c4a52d98-4107-4b94-a356-011593ea0bf9" />
-  <Project Path="Domain/Domain.csproj" Id="5f0ccae6-f801-4a54-ac8d-96899ebb0e61" />
-  <Project Path="Infrastructure/Infrastructure.csproj" />
-  <Project Path="WorkMosM.UnitTests/WorkMosM.UnitTests.csproj" Id="870fd9bb-47ad-4a78-96bb-06e1ad298aa0" />
-  <Project Path="WorkMosMApi/WorkMosmApi.csproj" />
+  <Project Path="WorkMosm.Api/WorkMosm.Api.csproj" />
+  <Project Path="WorkMosm.Application/WorkMosm.Application.csproj" />
+  <Project Path="WorkMosm.Domain/WorkMosm.Domain.csproj" />
+  <Project Path="WorkMosm.Infrastructure/WorkMosm.Infrastructure.csproj" />
+  <Project Path="WorkMosM.UnitTests/WorkMosM.UnitTests.csproj" Id="870fd9bb-47ad-4a78-96bb-06e1ad298aa0" DisplayName="WorkMosm.UnitTests" />
 </Solution>

@@ -1,21 +1,26 @@
-﻿using Application.UseCases.GetUserProfile;
-using Domain.CustomExceptions;
-using Domain.Entities;
-using Domain.Ports;
-using FluentAssertions;
+﻿using FluentAssertions;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 using Moq;
+using WorkMosm.Application.UseCases.GetUserProfile;
+using WorkMosm.Application.Validators;
+using WorkMosm.Domain.CustomExceptions;
+using WorkMosm.Domain.Entities;
+using WorkMosm.Domain.Ports;
 
-namespace WorkMosM.UnitTests.Application
+namespace WorkMosm.UnitTests.Application
 {
     public class GetUserProfileUseCaseTests
     {
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly GetUserProfileUseCase _useCase;
+        private readonly ILogger<GetUserProfileUseCase> _logger = new Logger<GetUserProfileUseCase>(new LoggerFactory());
+        private readonly GetUserProfileValidator _validator = new();
 
         public GetUserProfileUseCaseTests()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
-            _useCase = new GetUserProfileUseCase(_userRepositoryMock.Object);
+            _useCase = new GetUserProfileUseCase(_userRepositoryMock.Object, _logger, _validator);
         }
 
         [Fact]
@@ -30,7 +35,7 @@ namespace WorkMosM.UnitTests.Application
                 .ReturnsAsync(user);
 
             // Act
-            var result = await _useCase.ExecuteAsync(email);
+            var result = await _useCase.ExecuteAsync(new GetUSerProfileRequest(email));
 
             // Assert
             result.Should().NotBeNull();
@@ -50,7 +55,7 @@ namespace WorkMosM.UnitTests.Application
                 .ReturnsAsync((User?)null);
 
             // Act
-            var action = () => _useCase.ExecuteAsync(email);
+            var action = () => _useCase.ExecuteAsync(new GetUSerProfileRequest(email));
 
             // Assert
             await action.Should().ThrowAsync<UserNotFoundException>()
@@ -61,14 +66,13 @@ namespace WorkMosM.UnitTests.Application
         [InlineData("")]
         [InlineData("   ")]
         [InlineData(null)]
-        public async Task ExecuteAsync_WhenEmailIsInvalid_ThrowsArgumentException(string invalidEmail)
+        public async Task ExecuteAsync_WhenEmailIsInvalid_ThrowsValidationException(string invalidEmail)
         {
             // Act
-            var action = () => _useCase.ExecuteAsync(invalidEmail);
+            var action = () => _useCase.ExecuteAsync(new GetUSerProfileRequest(invalidEmail));
 
             // Assert
-            await action.Should().ThrowAsync<ArgumentException>()
-                .WithParameterName("email");
+            await action.Should().ThrowAsync<ValidationException>();
 
             _userRepositoryMock.Verify(r => r.GetByEmailAsync(It.IsAny<string>()), Times.Never);
         }
