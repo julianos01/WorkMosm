@@ -7,5 +7,5 @@
   <Project Path="WorkMosm.Application/WorkMosm.Application.csproj" />
   <Project Path="WorkMosm.Domain/WorkMosm.Domain.csproj" />
   <Project Path="WorkMosm.Infrastructure/WorkMosm.Infrastructure.csproj" />
-  <Project Path="WorkMosM.UnitTests/WorkMosm.UnitTests.csproj" Id="870fd9bb-47ad-4a78-96bb-06e1ad298aa0" />
+  <Project Path="WorkMosM.UnitTests/WorkMosmXXXX.UnitTests.csproj" Id="870fd9bb-47ad-4a78-96bb-06e1ad298aa0" />
 </Solution>
