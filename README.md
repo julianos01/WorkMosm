@@ -36,7 +36,7 @@ This project is structured using Hexagonal Architecture to ensure the core busin
 ### Steps to Run
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/julianos01/WorkMosM.git](https://github.com/julianos01/WorkMosM.git)
+    git clone [https://github.com/julianos01/WorkMosM.git](https://github.com/julianos01/WorkMosm.git)
     cd WorkMosM
     ```
 
@@ -47,12 +47,12 @@ This project is structured using Hexagonal Architecture to ensure the core busin
 
 3.  **Apply Database Migrations:**
     ```bash
-    dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project WorkMosMApi/WorkMosmApi.csproj
+    dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project WorkMosm.Api/WorkMosm.Api.csproj
     ```
 
 4.  **Launch the API:**
     ```bash
-    dotnet run --project WorkMosMApi/WorkMosmApi.csproj
+    dotnet run --project WorkMosm.Api/WorkMosm.Api.csproj
     ```
 
 ## 📝 License
