@@ -1,15 +1,11 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["WorkMosm.Api/WorkMosm.Api.csproj", "WorkMosm.Api/"]
-COPY ["WorkMosm.Application/WorkMosm.Application.csproj", "WorkMosm.Application/"]
-COPY ["WorkMosm.Infrastructure/WorkMosm.Infrastructure.csproj", "WorkMosm.Infrastructure/"]
-COPY ["WorkMosm.Domain/WorkMosm.Domain.csproj", "WorkMosm.Domain/"]
+COPY WorkMosm.Api/WorkMosm.Api.csproj WorkMosm.Api/
 RUN dotnet restore "WorkMosm.Api/WorkMosm.Api.csproj"
 
 COPY . .
 
-WORKDIR "/src"
 RUN dotnet publish "WorkMosm.Api/WorkMosm.Api.csproj" \
     -c Release \
     -o /app/publish \
