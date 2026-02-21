@@ -1,0 +1,51 @@
+﻿@page "/"
+@using WorkMosm.FrontEnd.Services
+@using Microsoft.AspNetCore.Components.Routing
+
+@inject ApiClient Api
+<PageTitle>Home</PageTitle>
+
+<h1>Hello to Workmosm Demo SPA!</h1>
+
+Welcome to your new app in process for Martin Julian Osorio.
+
+@if (isLoading)
+{
+    <p>🔄 Checking backend status...</p>
+}
+else if(backendUp)
+{
+    <p style="color: green;">✅ Backend is up and running!</p>
+    <p>
+        <NavLink href="/register">
+            Create an account
+        </NavLink>
+    </p>
+}
+else
+{
+    <p style="color: red;">❌ Backend is not reachable</p>
+}
+
+If it ran successfully, you can click the button above to create an account and then log in to see the protected content.
+
+@code {
+    private bool isLoading = true;
+    private bool backendUp = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            backendUp = await Api.IsBackendAliveAsync();
+        }
+        catch
+        {
+            backendUp = false;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

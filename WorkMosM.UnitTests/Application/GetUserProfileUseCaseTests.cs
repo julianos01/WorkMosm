@@ -28,7 +28,7 @@ namespace WorkMosm.UnitTests.Application
         {
             // Arrange
             var email = "martin@example.com";
-            var user = new User(email, "anyHash");
+            var user = new User(email, "anyHash", "Julian", "Doe");
 
             _userRepositoryMock
                 .Setup(r => r.GetByEmailAsync(email))

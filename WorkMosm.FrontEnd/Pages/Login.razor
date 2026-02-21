@@ -1,0 +1,101 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Authorization
+@using WorkMosm.FrontEnd.Auth
+@using WorkMosm.FrontEnd.Models
+@using WorkMosm.FrontEnd.Services
+@using WorkMosm.FrontEnd.Services.Interfaces
+@inject ILoginService login
+@inject ILogger<Login> _logger
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>Login</PageTitle>
+
+<div class="container mt-5">
+<EditForm Model="@model" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+        <div class="col-md-6 mx-auto shadow-sm p-4 border rounded bg-white">
+        <h1 class="mb-4 text-center">Login</h1>
+
+        <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <InputText id="email" class="form-control" placeholder="Email" @bind-Value="model.Email" />
+            <ValidationMessage For="@(() => model.Email)" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <InputText id="password" class="form-control" placeholder="Password" @bind-Value="model.Password" type="password" />
+            <ValidationMessage For="@(() => model.Password)" />
+        </div>
+
+        <button class="btn btn-primary w-100 mt-2" type="submit" disabled="@isProcessing">
+                @if (isProcessing)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span> Processing...</span>
+                }
+                else
+                {
+                    <span>Login</span>
+                }
+            </button>
+    </div>
+</EditForm>
+</div>
+
+@if (validationErrors.Any())
+{
+    <div class="col-md-6 mx-auto mt-3">
+        <div class="alert alert-danger shadow-sm">
+            <strong>There where some errors</strong>
+
+            <ul class="mt-2 mb-0">
+                @foreach (var error in validationErrors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+
+@code {
+    private List<string> validationErrors = new();
+    private LoginRequest model = new();
+    private bool isProcessing;
+
+    private async Task HandleLogin()
+    {
+        validationErrors.Clear();
+        isProcessing = true;
+
+        try
+        {
+            var result = await login.LoginAsync(model);
+
+            if(result.IsSuccess)
+            {
+                var customAuth = (CustomAuthStateProvider)AuthStateProvider;
+                await customAuth.MarkUserAsAuthenticated(result.Value);
+
+                navManager.NavigateTo("/carshowroom");
+            }
+            else
+            {
+                validationErrors.AddRange(result.Errors.Select(EditContext => EditContext.Message));
+            }
+        }
+        catch(Exception ex)
+        {
+            string message = "An error occurred while trying to log in. Please try again later.";
+            validationErrors.Add(message);
+            _logger.LogError(ex, "An error occurred during login.");
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}

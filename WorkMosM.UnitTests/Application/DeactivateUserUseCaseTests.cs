@@ -58,7 +58,7 @@ namespace WorkMosm.UnitTests.Application
             var testEmail = "user@example.com";
             var request = new DeactivateUserRequest(testEmail);
 
-            var user = new User(testEmail, "some_hash") { IsActive = true };
+            var user = new User(testEmail, "some_hash", "Julian", "Doe") { IsActive = true };
 
             var userRepositoryMock = new Mock<IUserRepository>();
             userRepositoryMock.Setup(r => r.GetByEmailAsync(testEmail))

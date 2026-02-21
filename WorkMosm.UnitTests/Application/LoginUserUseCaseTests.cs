@@ -41,7 +41,7 @@ namespace WorkMosm.UnitTests.Application
         {
             // Arrange
             var request = new LoginUserRequest("test@example.com", "CorrectPassword123");
-            var user = new User(request.Email, "hashed_password") { IsActive = true };
+            var user = new User(request.Email, "hashed_password", "Julian", "Doe") { IsActive = true };
             var expectedResult = new LoginUserResult("fake-jwt-token", DateTime.UtcNow.AddHours(1), user.Id.ToString());
 
             _userRepositoryMock.Setup(r => r.GetByEmailAsync(request.Email)).ReturnsAsync(user);
@@ -76,7 +76,7 @@ namespace WorkMosm.UnitTests.Application
         {
             // Arrange
             var request = new LoginUserRequest("test@example.com", "WrongPassword");
-            var user = new User(request.Email, "hashed_password") { IsActive = true };
+            var user = new User(request.Email, "hashed_password", "Julian", "Doe") { IsActive = true };
 
             _userRepositoryMock.Setup(r => r.GetByEmailAsync(request.Email)).ReturnsAsync(user);
             _passwordHasherMock.Setup(h => h.Verify(request.Password, user.PasswordHash)).Returns(false);
@@ -94,7 +94,7 @@ namespace WorkMosm.UnitTests.Application
         {
             // Arrange
             var request = new LoginUserRequest("inactive@example.com", "CorrectPassword");
-            var user = new User(request.Email, "hashed_password") { IsActive = false }; // <--- Usuario Inactivo
+            var user = new User(request.Email, "hashed_password", "Julian", "Doe") { IsActive = false }; // <--- Usuario Inactivo
 
             _userRepositoryMock.Setup(r => r.GetByEmailAsync(request.Email)).ReturnsAsync(user);
 

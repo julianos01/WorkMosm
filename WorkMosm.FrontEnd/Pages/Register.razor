@@ -1,0 +1,142 @@
+﻿@page "/register"
+
+@using WorkMosm.FrontEnd.Models
+@using WorkMosm.FrontEnd.Services
+@using WorkMosm.FrontEnd.Services.Interfaces
+@inject IUsersService Users
+@inject ILogger<Register> _logger
+
+<PageTitle>Register</PageTitle>
+
+<div class="container mt-5">
+    
+
+    <EditForm Model="@model" OnValidSubmit="RegisterUser">
+        <DataAnnotationsValidator />
+
+         <div class="col-md-6 mx-auto shadow-sm p-4 border rounded bg-white">
+            <h1 class="mb-4 text-center">Register</h1>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <InputText class="form-control" @bind-Value="model.Name" />
+                    <ValidationMessage For="@(() => model.Name)" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="lastName">LastName</label>
+                    <InputText class="form-control" @bind-Value="model.LastName" />
+                    <ValidationMessage For="@(() => model.LastName)" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <InputText class="form-control"  @bind-Value="model.Email" />
+                    <ValidationMessage For="@(() => model.Email)" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <InputText class="form-control" type="password" @bind-Value="model.Password" />
+                    <ValidationMessage For="@(() => model.Password)" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <InputText class="form-control" type="password" @bind-Value="model.ConfirmPassword" />
+                    <ValidationMessage For="@(() => model.ConfirmPassword)" />
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-2" type="submit" disabled="@isProcessing">
+                @if (isProcessing)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span> Registering...</span>
+                }
+                else
+                {
+                    <span>Register</span>
+                }
+            </button>
+
+         </div>
+
+       
+    </EditForm>
+</div>
+
+
+@if (isSuccess)
+{
+    <div class="alert alert-success">
+        <p class="mb-1"> ✅ User registered successfully.</p>
+
+        <small class="text-muted">
+            You can now
+            <NavLink href="/login" class="btn btn-link p-0 align-baseline">
+                login
+            </NavLink>
+            With your credentials.
+        </small>
+    </div>
+}
+
+@if (validationErrors.Any())
+{
+
+    <div class="alert alert-danger">
+        <strong>There where some errors</strong>
+
+        <ul class="mt-2 mb-0">
+            @foreach (var error in validationErrors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+    private RegisterUserRequest model = new();
+    private bool isSuccess;
+    private List<string> validationErrors = new();
+    private bool isProcessing;
+
+    private async Task RegisterUser()
+    {
+        isSuccess = false;
+        validationErrors.Clear();
+        isProcessing = true;
+
+        try
+        {
+            var result =  await Users.RegisterAsync(model);
+
+            if(result.IsSuccess)
+            {
+                isSuccess = true;
+                model = new RegisterUserRequest(); 
+            }
+            else
+            {
+                validationErrors = result.Errors.Select(e => e.Message).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            string message = "An unexpected error occurred during user registration.";
+            _logger.LogError(ex, message);
+            validationErrors.Add(message);
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}
