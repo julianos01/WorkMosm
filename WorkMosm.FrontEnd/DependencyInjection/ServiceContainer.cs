@@ -21,6 +21,7 @@ namespace WorkMosm.FrontEnd.DependencyInjection
             services.AddScoped<ApiClient>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IVehicleService, VehicleService>();
 
             services.AddAuthorizationCore();
             services.AddScoped<CustomAuthStateProvider>();

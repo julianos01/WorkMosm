@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using WorkMosm.Application.UseCases.DeactivateUser;
 using WorkMosm.Application.UseCases.GetUserProfile;
+using WorkMosm.Application.UseCases.GetVehiclesUseCase;
 using WorkMosm.Application.UseCases.LoginUser;
 using WorkMosm.Application.UseCases.RegisterUser;
 using WorkMosm.Application.UseCases.UpdateUser;
@@ -14,11 +15,13 @@ namespace WorkMosm.Application.DependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
             services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
             services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
             services.AddScoped<IUpdateUserProfile, UpdateUserProfileUseCase>();
             services.AddScoped<IDeactivateUserUseCase, DeactivateUserUseCase>();
+            services.AddScoped<IGetVehiclesUseCase, GetVehiclesUseCase>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

@@ -33,6 +33,7 @@ if (!app.Environment.IsProduction())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 app.UseCors("BlazorFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
