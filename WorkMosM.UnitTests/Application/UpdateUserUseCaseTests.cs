@@ -56,7 +56,7 @@ namespace WorkMosm.UnitTests.Application
             // Arrange
             var userId = "user-1";
             var request = new UpdateUserRequest(userId, "new@test.com", "plain-password");
-            var existingUser = new User("old@test.com", "old-hash");
+            var existingUser = new User("old@test.com", "old-hash", "Julian", "Doe");
 
             _repositoryMock.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync(existingUser);
             _passwordHasherMock.Setup(x => x.Hash("plain-password")).Returns("new-hashed-password");
@@ -77,7 +77,7 @@ namespace WorkMosm.UnitTests.Application
             // Arrange
             var userId = "user-1";
             var request = new UpdateUserRequest(userId, "new@test.com", "");
-            var existingUser = new User("old@test.com", "keep-this-hash");
+            var existingUser = new User("old@test.com", "keep-this-hash", "Julian", "Doe");
 
             _repositoryMock.Setup(x => x.GetByIdAsync(userId)).ReturnsAsync(existingUser);
 

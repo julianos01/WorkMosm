@@ -36,7 +36,7 @@ namespace WorkMosm.UnitTests.Application
         public async Task ExecuteAsync_WhenUserDoesNotExist_AddsUserWithHashedPassword()
         {
             // Arrange
-            var request = new RegisterUserRequest("test@example.com", "P@ssw0rd123");
+            var request = new RegisterUserRequest("test@example.com", "P@ssw0rd123", "Julian", "Doe");
             var hashedPassword = "hashedValue";
 
             _userRepositoryMock
@@ -60,8 +60,8 @@ namespace WorkMosm.UnitTests.Application
         public async Task ExecuteAsync_WhenUserAlreadyExists_ThrowsInvalidOperationException()
         {
             // Arrange
-            var request = new RegisterUserRequest("exists@example.com", "anyPassword");
-            var existingUser = new User(request.Email, "existingHash");
+            var request = new RegisterUserRequest("exists@example.com", "anyPassword", "Julian", "Doe");
+            var existingUser = new User(request.Email, "existingHash", "Julian", "Doe ");
 
             _userRepositoryMock
                 .Setup(r => r.GetByEmailAsync(request.Email))
@@ -81,7 +81,7 @@ namespace WorkMosm.UnitTests.Application
         public async Task ExecuteAsync_WhenRequestIsInvalid_ThrowsValidationException()
         {
             // Arrange
-            var request = new RegisterUserRequest("email-invalido", "123");
+            var request = new RegisterUserRequest("email-invalido", "123", "Julian", "Doe");
 
             // Act
             var action = () => _useCase.ExecuteAsync(request);

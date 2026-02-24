@@ -37,7 +37,7 @@ This project is structured using Hexagonal Architecture to ensure the core busin
 1.  **Clone the repository:**
     ```bash
     git clone [https://github.com/julianos01/WorkMosM.git](https://github.com/julianos01/WorkMosm.git)
-    cd WorkMosM
+    cd WorkMosm
     ```
 
 2.  **Restore dependencies:**

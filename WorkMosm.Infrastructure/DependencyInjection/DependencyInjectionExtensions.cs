@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using WorkMosm.Application.Interfaces.Security;
 using WorkMosm.Domain.Ports;
 using WorkMosm.Infrastructure.Configurations;
+using WorkMosm.Infrastructure.Images;
 using WorkMosm.Infrastructure.Persistence;
+using WorkMosm.Infrastructure.Persistence.Vehicles;
 using WorkMosm.Infrastructure.Security;
 
 namespace WorkMosm.Infrastructure.DependencyInjection
@@ -29,6 +31,8 @@ namespace WorkMosm.Infrastructure.DependencyInjection
 
             services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+            services.AddScoped<IVehicleImageService, LocalVehicleImageService>();
+            services.AddScoped<IVehicleRepository, EfVehicleRepository>();
 
             return services;
         }

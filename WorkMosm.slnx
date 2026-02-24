@@ -6,6 +6,7 @@
   <Project Path="WorkMosm.Api/WorkMosm.Api.csproj" />
   <Project Path="WorkMosm.Application/WorkMosm.Application.csproj" />
   <Project Path="WorkMosm.Domain/WorkMosm.Domain.csproj" />
+  <Project Path="WorkMosm.FrontEnd/WorkMosm.FrontEnd.csproj" Id="269db2ed-63ef-4766-84a9-362801496188" />
   <Project Path="WorkMosm.Infrastructure/WorkMosm.Infrastructure.csproj" />
   <Project Path="WorkMosM.UnitTests/WorkMosm.UnitTests.csproj" Id="870fd9bb-47ad-4a78-96bb-06e1ad298aa0" />
 </Solution>

@@ -36,7 +36,11 @@ namespace WorkMosm.Application.UseCases.RegisterUser
             {
                 throw new UserAlreadyExistsException();
             }
-            var user = new User(registerUserRequest.Email, _passwordHasher.Hash(registerUserRequest.Password));
+            var user = new User(
+                registerUserRequest.Email,
+                _passwordHasher.Hash(registerUserRequest.Password),
+                registerUserRequest.Name ?? "",
+                registerUserRequest.LastName ?? "");
             await _userRepository.AddAsync(user);
         }
     }

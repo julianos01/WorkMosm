@@ -1,0 +1,85 @@
+﻿@page "/carshowroom"
+@using Microsoft.AspNetCore.Authorization
+@using WorkMosm.FrontEnd.Models
+@using WorkMosm.FrontEnd.Services.Interfaces
+@inject IVehicleService vehicleService
+@inject ILogger<CarShowRoom> _logger
+@attribute [Authorize]
+
+<PageTitle>Car Showroom</PageTitle>
+<div class="container mt-5">
+    <h3>Car Showroom</h3>
+
+    @if (isLoading)
+    {
+        <p>Loading vehicles...</p>
+    }
+   else if(vehicles == null)
+    {
+        <p>Loading vehicles...</p>
+    }
+    else if(!vehicles.Any())
+    {
+        <p>No vehicles available</p>
+        
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach (var car in vehicles)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@car.ImageUrl" 
+                             class="card-img-top vehicle-card-img"
+                             alt="@($"{car.Brand} {car.Model}")"
+                             style="height: 275px;object-fit:cover"/>
+
+                             <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-primary">
+                                    @car.Brand @car.Model
+                                </h5>
+                                <p class="card-text text-muted mb-1">Year: @car.Year</p>
+                             </div>
+                        
+                             <div class="mt-auto">
+                                <p class="card-text fs-5 fw-bold text-dark mb-3 ms-2">
+                                    <strong>
+                                        $ @car.Price.ToString("C0",
+                                                                    new System.Globalization.CultureInfo("es-CO"))
+                                    </strong>
+                                </p>
+                                <button class="btn btn-primary w-100 py-2 shadow-sm">
+                                    <i class="bi bi-cart-plus me-2"></i> Buy Now
+                                </button>
+                             </div>
+                    </div>
+                    
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+
+@code {
+    private IReadOnlyList<VehicleDto>? vehicles;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            vehicles = await vehicleService.GetVehiclesAsync();
+        }
+        catch
+        {
+            _logger.LogError("Error loading all cars");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
